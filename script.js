@@ -1,6 +1,80 @@
-// --- INTERACTIVIDAD DEL HEADER ---
+// --- SISTEMA DE IDIOMAS (i18n) ---
+const traducciones = {
+    es: {
+        w_title: "Bienvenido a TWS",
+        w_desc: "Sistema de Información Cívica en Tiempo Real",
+        w_step1: "Revisa el tiempo estimado de llegada de los buses.",
+        w_step2: "Toca cualquier estación para ver su nivel de ocupación.",
+        w_step3: "Mantente informado con nuestras alertas de movilidad en vivo.",
+        w_start: "👉 Tocar para Empezar",
+        app_title: "Rutas Troncal Norte - Caracas",
+        hdr_num: "Número", hdr_dest: "Destino", hdr_time: "Tiempo",
+        sel_title: "Selecciona tu estación actual", sel_opt: "-- Elige una estación --",
+        alert_title: "Alertas de movilidad",
+        prox: "Próximo"
+    },
+    en: {
+        w_title: "Welcome to TWS",
+        w_desc: "Real-Time Civic Information System",
+        w_step1: "Check the estimated arrival time of the buses.",
+        w_step2: "Touch any station to see its current occupancy level.",
+        w_step3: "Stay informed with our live mobility alerts.",
+        w_start: "👉 Touch to Start",
+        app_title: "North - Caracas Routes",
+        hdr_num: "Number", hdr_dest: "Destination", hdr_time: "Time",
+        sel_title: "Select your current station", sel_opt: "-- Choose a station --",
+        alert_title: "Mobility Alerts",
+        prox: "Arriving"
+    }
+};
+
+let idiomaActual = 'es';
+
+document.getElementById('btn-es').addEventListener('click', () => cambiarIdioma('es'));
+document.getElementById('btn-en').addEventListener('click', () => cambiarIdioma('en'));
+
+function cambiarIdioma(lang) {
+    idiomaActual = lang;
+    
+    // Cambiar clases visuales de los botones
+    document.getElementById('btn-es').classList.toggle('active', lang === 'es');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+
+    // Aplicar textos
+    const t = traducciones[lang];
+    document.getElementById('wel-title').textContent = t.w_title;
+    document.getElementById('wel-desc').textContent = t.w_desc;
+    document.getElementById('wel-step1').textContent = t.w_step1;
+    document.getElementById('wel-step2').textContent = t.w_step2;
+    document.getElementById('wel-step3').textContent = t.w_step3;
+    document.getElementById('btn-start').textContent = t.w_start;
+    
+    document.getElementById('app-title').textContent = t.app_title;
+    document.getElementById('hdr-num').textContent = t.hdr_num;
+    document.getElementById('hdr-dest').textContent = t.hdr_dest;
+    document.getElementById('hdr-time').textContent = t.hdr_time;
+    document.getElementById('sel-title').textContent = t.sel_title;
+    document.getElementById('sel-opt').textContent = t.sel_opt;
+    document.getElementById('alert-title').textContent = t.alert_title;
+}
+
+// --- BOTÓN DE EMPEZAR ---
+document.getElementById('btn-start').addEventListener('click', () => {
+    const screen = document.getElementById('welcome-screen');
+    screen.style.transform = 'translateY(-100%)'; // Desliza hacia arriba
+    screen.style.opacity = '0';
+    setTimeout(() => { screen.style.display = 'none'; }, 500);
+});
+
+// Botón de Volver (Para propósitos del prototipo, lo usamos para regresar al inicio)
 document.getElementById('btn-volver').addEventListener('click', function() {
     map.setZoom(12);
+    const screen = document.getElementById('welcome-screen');
+    screen.style.display = 'flex';
+    setTimeout(() => { 
+        screen.style.transform = 'translateY(0)';
+        screen.style.opacity = '1'; 
+    }, 10);
 });
 
 // --- INICIALIZACIÓN DEL MAPA ---
@@ -14,46 +88,60 @@ L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_M
     attribution: 'Tiles &copy; Esri'
 }).addTo(map);
 
-// --- COORDENADAS ESTACIONES ---
 const estaciones = [
-    { nombre: "Terminal", lat: 4.7615, lng: -74.0435 }, 
-    { nombre: "Calle 187", lat: 4.7523, lng: -74.0466 },
-    { nombre: "Portal del Norte", lat: 4.7428, lng: -74.0494 },
-    { nombre: "Toberín", lat: 4.7355, lng: -74.0515 },
-    { nombre: "Mazurén", lat: 4.7245, lng: -74.0549 },
-    { nombre: "Calle 146", lat: 4.7196, lng: -74.0563 },
-    { nombre: "Calle 127", lat: 4.7022, lng: -74.0607 },
-    { nombre: "Pepe Sierra", lat: 4.6934, lng: -74.0628 },
-    { nombre: "Calle 100", lat: 4.6836, lng: -74.0645 },
-    { nombre: "Virrey", lat: 4.6750, lng: -74.0645 },
-    { nombre: "Calle 85", lat: 4.6698, lng: -74.0646 },
-    { nombre: "Héroes", lat: 4.6660, lng: -74.0648 },
-    { nombre: "Calle 72", lat: 4.6585, lng: -74.0658 },
-    { nombre: "Calle 63", lat: 4.6482, lng: -74.0677 },
-    { nombre: "Marly", lat: 4.6393, lng: -74.0694 },
-    { nombre: "Calle 45", lat: 4.6335, lng: -74.0706 },
-    { nombre: "Profamilia", lat: 4.6245, lng: -74.0725 },
-    { nombre: "Calle 26", lat: 4.6158, lng: -74.0743 },
-    { nombre: "Calle 22", lat: 4.6094, lng: -74.0758 },
-    { nombre: "Calle 19", lat: 4.6062, lng: -74.0766 },
-    { nombre: "Av. Jiménez", lat: 4.6018, lng: -74.0775 }
+    { nombre: "Terminal", lat: 4.7615, lng: -74.0435, congestion: "Normal" }, 
+    { nombre: "Calle 187", lat: 4.7523, lng: -74.0466, congestion: "Poca gente" },
+    { nombre: "Portal del Norte", lat: 4.7428, lng: -74.0494, congestion: "Mucha gente" },
+    { nombre: "Toberín", lat: 4.7355, lng: -74.0515, congestion: "Normal" },
+    { nombre: "Mazurén", lat: 4.7245, lng: -74.0549, congestion: "Poca gente" },
+    { nombre: "Calle 146", lat: 4.7196, lng: -74.0563, congestion: "Normal" },
+    { nombre: "Calle 127", lat: 4.7022, lng: -74.0607, congestion: "Mucha gente" },
+    { nombre: "Pepe Sierra", lat: 4.6934, lng: -74.0628, congestion: "Normal" },
+    { nombre: "Calle 100", lat: 4.6836, lng: -74.0645, congestion: "Mucha gente" },
+    { nombre: "Virrey", lat: 4.6750, lng: -74.0645, congestion: "Poca gente" },
+    { nombre: "Calle 85", lat: 4.6698, lng: -74.0646, congestion: "Normal" },
+    { nombre: "Héroes", lat: 4.6660, lng: -74.0648, congestion: "Mucha gente" },
+    { nombre: "Calle 72", lat: 4.6585, lng: -74.0658, congestion: "Mucha gente" },
+    { nombre: "Calle 63", lat: 4.6482, lng: -74.0677, congestion: "Normal" },
+    { nombre: "Marly", lat: 4.6393, lng: -74.0694, congestion: "Normal" },
+    { nombre: "Calle 45", lat: 4.6335, lng: -74.0706, congestion: "Poca gente" },
+    { nombre: "Profamilia", lat: 4.6245, lng: -74.0725, congestion: "Poca gente" },
+    { nombre: "Calle 26", lat: 4.6158, lng: -74.0743, congestion: "Normal" },
+    { nombre: "Calle 22", lat: 4.6094, lng: -74.0758, congestion: "Poca gente" },
+    { nombre: "Calle 19", lat: 4.6062, lng: -74.0766, congestion: "Normal" },
+    { nombre: "Av. Jiménez", lat: 4.6018, lng: -74.0775, congestion: "Mucha gente" }
 ];
 
-// Dibujar Ruta
 const rutaCoords = estaciones.map(est => [est.lat, est.lng]);
 L.polyline(rutaCoords, { color: '#0284c7', weight: 8, opacity: 1 }).addTo(map);
 
-// --- RENDERIZAR ESTACIONES Y SELECTOR ---
 const iconoEstacion = L.divIcon({
-    className: 'custom-station-icon', html: '<div class="station-pin"></div>',
-    iconSize: [30, 40], iconAnchor: [15, 40], popupAnchor: [0, -40] 
+    className: 'custom-station-icon', 
+    html: '<div class="station-pin"><img src="https://cdn-icons-png.flaticon.com/512/3034/3034002.png"></div>',
+    iconSize: [38, 48], iconAnchor: [19, 48], popupAnchor: [0, -45] 
 });
 
 const selector = document.getElementById('station-select');
 
 estaciones.forEach((est, index) => {
     const marker = L.marker([est.lat, est.lng], { icon: iconoEstacion }).addTo(map);
-    marker.bindPopup(`<div style="font-size:18px;"><b>${est.nombre}</b><br><span style="color:#10b981;">Operativa</span></div>`);
+    
+    let badgeClass = "";
+    let icono = "";
+    if(est.congestion === "Poca gente") { badgeClass = "cong-baja"; icono = "🟢"; }
+    else if(est.congestion === "Normal") { badgeClass = "cong-normal"; icono = "🟡"; }
+    else if(est.congestion === "Mucha gente") { badgeClass = "cong-alta"; icono = "🔴"; }
+
+    const popupContent = `
+        <div class="popup-custom">
+            <h3>${est.nombre}</h3>
+            <p><b>Estado:</b> Operativa</p>
+            <p><b>Ocupación actual:</b></p>
+            <span class="badge-cong ${badgeClass}">${icono} ${est.congestion}</span>
+        </div>
+    `;
+
+    marker.bindPopup(popupContent);
     marker.on('click', () => { map.flyTo([est.lat, est.lng], 16, { animate: true }); });
 
     const option = document.createElement('option');
@@ -69,10 +157,10 @@ selector.addEventListener('change', function() {
 
 // --- SIMULACIÓN DE BUSES ---
 const busesActivos = [
-    { id: "B13", nombre: "Portal Norte", tiempo: "2 min", indexBase: 4, progreso: 0, direccion: -1, velocidad: 0.003, marcador: null },
-    { id: "8", nombre: "Terminal", tiempo: "5 min", indexBase: 8, progreso: 0.5, direccion: -1, velocidad: 0.004, marcador: null },
-    { id: "H75", nombre: "Usme", tiempo: "9 min", indexBase: 12, progreso: 0, direccion: 1, velocidad: 0.002, marcador: null },
-    { id: "G12", nombre: "P. Sur", tiempo: "14 min", indexBase: 17, progreso: 0.8, direccion: 1, velocidad: 0.003, marcador: null }
+    { id: "B13", nombre: "Portal Norte", tiempoSegundos: 135, indexBase: 4, progreso: 0, direccion: -1, velocidad: 0.003, marcador: null },
+    { id: "8", nombre: "Terminal", tiempoSegundos: 310, indexBase: 8, progreso: 0.5, direccion: -1, velocidad: 0.004, marcador: null },
+    { id: "H75", nombre: "Usme", tiempoSegundos: 540, indexBase: 12, progreso: 0, direccion: 1, velocidad: 0.002, marcador: null },
+    { id: "G12", nombre: "P. Sur", tiempoSegundos: 840, indexBase: 17, progreso: 0.8, direccion: 1, velocidad: 0.003, marcador: null }
 ];
 
 const panelRutas = document.getElementById('routes-list');
@@ -90,12 +178,36 @@ busesActivos.forEach(bus => {
     row.innerHTML = `
         <div class="route-num">${bus.id}</div>
         <div class="route-name">${bus.nombre}</div>
-        <div class="route-time">${bus.tiempo}</div>
+        <div class="route-time" id="time-${bus.id}">--</div>
     `;
     
     row.addEventListener('click', () => { map.flyTo(bus.marcador.getLatLng(), 16, { animate: true, duration: 1 }); });
     panelRutas.appendChild(row);
 });
+
+// Lógica de LLEGADAS (Se ejecuta cada 1 segundo)
+setInterval(() => {
+    busesActivos.forEach(bus => {
+        bus.tiempoSegundos--; 
+        if (bus.tiempoSegundos <= 0) {
+            bus.tiempoSegundos = Math.floor(Math.random() * 600) + 300; 
+        }
+
+        const timeUI = document.getElementById(`time-${bus.id}`);
+        if (timeUI) {
+            if (bus.tiempoSegundos <= 20) {
+                // Traducción dinámica de la palabra "Próximo"
+                timeUI.textContent = traducciones[idiomaActual].prox;
+                timeUI.classList.add("arriving");
+            } else {
+                const m = Math.floor(bus.tiempoSegundos / 60);
+                const s = bus.tiempoSegundos % 60;
+                timeUI.textContent = `${m}:${s.toString().padStart(2, '0')} min`;
+                timeUI.classList.remove("arriving");
+            }
+        }
+    });
+}, 1000);
 
 function moverBuses() {
     busesActivos.forEach(bus => {
@@ -118,13 +230,18 @@ function moverBuses() {
 moverBuses();
 
 // --- SISTEMA DE ALERTAS DINÁMICAS ---
-const arrayAlertas = [
-    { tipo: 'error', texto: "⚠️ Alta congestión reportada en Héroes. Retrasos de 5-10 min en servicios B." },
-    { tipo: 'success', texto: "✅ Operación normal en la Troncal Norte. Flujo continuo de articulados." },
-    { tipo: 'info', texto: "🌧️ Lluvia moderada en sector Calle 100. Por favor, ingrese con precaución." },
-    { tipo: 'warning', texto: "🚧 Mantenimiento en carril exclusivo cerca a Pepe Sierra. Transite con cuidado." },
-    { tipo: 'error', texto: "🚨 Novedad operativa en Calle 72. Rutas A presentan desvíos temporales." }
-];
+const arrayAlertas = {
+    es: [
+        { tipo: 'error', texto: "⚠️ Alta congestión en Héroes. Retrasos de 5-10 min." },
+        { tipo: 'success', texto: "✅ Operación normal en la Troncal Norte." },
+        { tipo: 'info', texto: "🌧️ Lluvia en Calle 100. Ingrese con precaución." }
+    ],
+    en: [
+        { tipo: 'error', texto: "⚠️ High congestion at Héroes. 5-10 min delays." },
+        { tipo: 'success', texto: "✅ Normal operation on North Trunk line." },
+        { tipo: 'info', texto: "🌧️ Rain at Calle 100. Please enter with caution." }
+    ]
+};
 
 let indiceAlerta = 0;
 const divAlerta = document.getElementById('alert-text');
@@ -133,13 +250,13 @@ function actualizarAlerta() {
     divAlerta.style.opacity = '0';
     
     setTimeout(() => {
-        const alertaVisible = arrayAlertas[indiceAlerta];
+        // Tomar la alerta basada en el idioma actual
+        const alertaVisible = arrayAlertas[idiomaActual][indiceAlerta];
         divAlerta.innerHTML = alertaVisible.texto;
         divAlerta.className = `alert-message alert-${alertaVisible.tipo}`;
         
         divAlerta.style.opacity = '1';
-
-        indiceAlerta = (indiceAlerta + 1) % arrayAlertas.length;
+        indiceAlerta = (indiceAlerta + 1) % arrayAlertas[idiomaActual].length;
     }, 500); 
 }
 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prototipo TWS - UI Moderna</title>
+    <title>Prototipo TWS - UI Bilingüe</title>
     
     <!-- Hoja de estilos de Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -12,11 +12,46 @@
 </head>
 <body>
 
+    <!-- PANTALLA DE BIENVENIDA -->
+    <div id="welcome-screen">
+        <!-- Selector de Idioma -->
+        <div class="lang-switcher">
+            <button id="btn-es" class="lang-btn active">ES</button>
+            <button id="btn-en" class="lang-btn">EN</button>
+        </div>
+        
+        <div class="welcome-content">
+            <div class="welcome-icon">🚍</div>
+            <h1 id="wel-title">Bienvenido a TWS</h1>
+            <p id="wel-desc">Sistema de Información Cívica en Tiempo Real</p>
+            
+            <!-- Instrucciones -->
+            <div class="instructions">
+                <div class="inst-step">
+                    <span class="step-num">1</span>
+                    <p id="wel-step1">Revisa el tiempo estimado de llegada de los buses.</p>
+                </div>
+                <div class="inst-step">
+                    <span class="step-num">2</span>
+                    <p id="wel-step2">Toca cualquier estación para ver su nivel de ocupación.</p>
+                </div>
+                <div class="inst-step">
+                    <span class="step-num">3</span>
+                    <p id="wel-step3">Mantente informado con nuestras alertas de movilidad en vivo.</p>
+                </div>
+            </div>
+
+            <!-- Botón de Inicio -->
+            <button id="btn-start" class="btn-start">👉 Tocar para Empezar</button>
+        </div>
+    </div>
+
+    <!-- UI PRINCIPAL DE LA APP -->
     <div class="app-container">
         <!-- HEADER -->
         <div class="top-bar">
             <div class="back-btn" id="btn-volver">←</div>
-            <div class="title">Rutas Troncal Norte - Caracas</div>
+            <div class="title" id="app-title">Rutas Troncal Norte - Caracas</div>
         </div>
 
         <!-- MAPA -->
@@ -27,27 +62,26 @@
         <!-- PANEL DERECHO (RUTAS) -->
         <div class="routes-panel">
             <div class="routes-header">
-                <span>Número</span>
-                <span>Destino</span>
-                <span style="text-align: center;">Tiempo</span>
+                <span id="hdr-num">Número</span>
+                <span id="hdr-dest">Destino</span>
+                <span id="hdr-time" style="text-align: center;">Tiempo</span>
             </div>
             <div id="routes-list"></div>
         </div>
 
         <!-- PANEL INFERIOR IZQ (ESTACIONES) -->
         <div class="station-panel">
-            <p>Selecciona tu estación actual</p>
+            <p id="sel-title">Selecciona tu estación actual</p>
             <select id="station-select" class="station-select">
-                <option value="" disabled selected>-- Elige una estación --</option>
+                <option value="" disabled selected id="sel-opt">-- Elige una estación --</option>
             </select>
         </div>
 
         <!-- PANEL INFERIOR DER (ALERTAS DINÁMICAS) -->
         <div class="alerts-panel">
             <div class="alerts-title">
-                <div class="live-dot"></div> Alertas de movilidad
+                <div class="live-dot"></div> <span id="alert-title">Alertas de movilidad</span>
             </div>
-            <!-- Contenedor de la alerta -->
             <div id="alert-text" class="alert-message alert-info">
                 Cargando estado operativo...
             </div>
@@ -56,7 +90,7 @@
 
     <!-- Script de Leaflet -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <!-- Tu script con la lógica de la aplicación -->
+    <!-- Script de lógica -->
     <script src="script.js"></script>
 
 </body>
