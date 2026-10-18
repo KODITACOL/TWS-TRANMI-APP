@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prototipo TWS - UI Moderna</title>
+    
+    <!-- Hoja de estilos de Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- Tu hoja de estilos personalizada -->
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- HEADER -->
+        <div class="top-bar">
+            <div class="back-btn" id="btn-volver">←</div>
+            <div class="title">Rutas Troncal Norte - Caracas</div>
+        </div>
+
+        <!-- MAPA -->
+        <div id="map-container">
+            <div id="map"></div>
+        </div>
+
+        <!-- PANEL DERECHO (RUTAS) -->
+        <div class="routes-panel">
+            <div class="routes-header">
+                <span>Número</span>
+                <span>Destino</span>
+                <span style="text-align: center;">Tiempo</span>
+            </div>
+            <div id="routes-list"></div>
+        </div>
+
+        <!-- PANEL INFERIOR IZQ (ESTACIONES) -->
+        <div class="station-panel">
+            <p>Selecciona tu estación actual</p>
+            <select id="station-select" class="station-select">
+                <option value="" disabled selected>-- Elige una estación --</option>
+            </select>
+        </div>
+
+        <!-- PANEL INFERIOR DER (ALERTAS DINÁMICAS) -->
+        <div class="alerts-panel">
+            <div class="alerts-title">
+                <div class="live-dot"></div> Alertas de movilidad
+            </div>
+            <!-- Contenedor de la alerta -->
+            <div id="alert-text" class="alert-message alert-info">
+                Cargando estado operativo...
+            </div>
+        </div>
+    </div>
+
+    <!-- Script de Leaflet -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Tu script con la lógica de la aplicación -->
+    <script src="script.js"></script>
+
+</body>
+</html>
