@@ -1,30 +1,24 @@
 // --- SISTEMA DE IDIOMAS (i18n) ---
 const traducciones = {
     es: {
-        w_title: "Bienvenido a TWS",
-        w_desc: "Sistema de Información Cívica en Tiempo Real",
+        w_title: "Bienvenido a TWS", w_desc: "Sistema de Información Cívica en Tiempo Real",
         w_step1: "Revisa el tiempo estimado de llegada de los buses.",
         w_step2: "Toca cualquier estación para ver su nivel de ocupación.",
         w_step3: "Mantente informado con nuestras alertas de movilidad en vivo.",
-        w_start: "👉 Tocar para Empezar",
-        app_title: "Rutas Troncal Norte - Caracas",
-        hdr_num: "Número", hdr_dest: "Destino", hdr_time: "Tiempo",
+        w_start: "👉 Tocar para Empezar", app_title: "Troncal Norte - Caracas",
+        hdr_num: "N°", hdr_dest: "Destino", hdr_time: "Tiempo",
         sel_title: "Selecciona tu estación actual", sel_opt: "-- Elige una estación --",
-        alert_title: "Alertas de movilidad",
-        prox: "Próximo"
+        alert_title: "Alertas de movilidad", prox: "Próximo"
     },
     en: {
-        w_title: "Welcome to TWS",
-        w_desc: "Real-Time Civic Information System",
+        w_title: "Welcome to TWS", w_desc: "Real-Time Civic Information System",
         w_step1: "Check the estimated arrival time of the buses.",
         w_step2: "Touch any station to see its current occupancy level.",
         w_step3: "Stay informed with our live mobility alerts.",
-        w_start: "👉 Touch to Start",
-        app_title: "North - Caracas Routes",
-        hdr_num: "Number", hdr_dest: "Destination", hdr_time: "Time",
+        w_start: "👉 Touch to Start", app_title: "North - Caracas Routes",
+        hdr_num: "N°", hdr_dest: "Destination", hdr_time: "Time",
         sel_title: "Select your current station", sel_opt: "-- Choose a station --",
-        alert_title: "Mobility Alerts",
-        prox: "Arriving"
+        alert_title: "Mobility Alerts", prox: "Arriving"
     }
 };
 
@@ -35,12 +29,9 @@ document.getElementById('btn-en').addEventListener('click', () => cambiarIdioma(
 
 function cambiarIdioma(lang) {
     idiomaActual = lang;
-    
-    // Cambiar clases visuales de los botones
     document.getElementById('btn-es').classList.toggle('active', lang === 'es');
     document.getElementById('btn-en').classList.toggle('active', lang === 'en');
 
-    // Aplicar textos
     const t = traducciones[lang];
     document.getElementById('wel-title').textContent = t.w_title;
     document.getElementById('wel-desc').textContent = t.w_desc;
@@ -61,12 +52,14 @@ function cambiarIdioma(lang) {
 // --- BOTÓN DE EMPEZAR ---
 document.getElementById('btn-start').addEventListener('click', () => {
     const screen = document.getElementById('welcome-screen');
-    screen.style.transform = 'translateY(-100%)'; // Desliza hacia arriba
+    screen.style.transform = 'translateY(-100%)'; 
     screen.style.opacity = '0';
-    setTimeout(() => { screen.style.display = 'none'; }, 500);
+    setTimeout(() => { 
+        screen.style.display = 'none'; 
+        map.invalidateSize(); // Fuerza al mapa a adaptarse al contenedor cuando desaparece la bienvenida
+    }, 500);
 });
 
-// Botón de Volver (Para propósitos del prototipo, lo usamos para regresar al inicio)
 document.getElementById('btn-volver').addEventListener('click', function() {
     map.setZoom(12);
     const screen = document.getElementById('welcome-screen');
@@ -87,6 +80,11 @@ const map = L.map('map', {
 L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
     attribution: 'Tiles &copy; Esri'
 }).addTo(map);
+
+// ¡CLAVE PARA RESPONSIVE!: Asegura que el mapa se pinte bien si rotas el celular o cambias la ventana
+window.addEventListener('resize', function() {
+    map.invalidateSize();
+});
 
 const estaciones = [
     { nombre: "Terminal", lat: 4.7615, lng: -74.0435, congestion: "Normal" }, 
@@ -136,7 +134,7 @@ estaciones.forEach((est, index) => {
         <div class="popup-custom">
             <h3>${est.nombre}</h3>
             <p><b>Estado:</b> Operativa</p>
-            <p><b>Ocupación actual:</b></p>
+            <p><b>Ocupación:</b></p>
             <span class="badge-cong ${badgeClass}">${icono} ${est.congestion}</span>
         </div>
     `;
@@ -155,7 +153,7 @@ selector.addEventListener('change', function() {
     map.flyTo([est.lat, est.lng], 16, { animate: true, duration: 1.5 });
 });
 
-// --- SIMULACIÓN DE BUSES ---
+// --- SIMULACIÓN DE BUSES CON TIEMPO DINÁMICO ---
 const busesActivos = [
     { id: "B13", nombre: "Portal Norte", tiempoSegundos: 135, indexBase: 4, progreso: 0, direccion: -1, velocidad: 0.003, marcador: null },
     { id: "8", nombre: "Terminal", tiempoSegundos: 310, indexBase: 8, progreso: 0.5, direccion: -1, velocidad: 0.004, marcador: null },
@@ -185,7 +183,7 @@ busesActivos.forEach(bus => {
     panelRutas.appendChild(row);
 });
 
-// Lógica de LLEGADAS (Se ejecuta cada 1 segundo)
+// Cronómetro de llegadas
 setInterval(() => {
     busesActivos.forEach(bus => {
         bus.tiempoSegundos--; 
@@ -196,7 +194,6 @@ setInterval(() => {
         const timeUI = document.getElementById(`time-${bus.id}`);
         if (timeUI) {
             if (bus.tiempoSegundos <= 20) {
-                // Traducción dinámica de la palabra "Próximo"
                 timeUI.textContent = traducciones[idiomaActual].prox;
                 timeUI.classList.add("arriving");
             } else {
@@ -229,7 +226,7 @@ function moverBuses() {
 }
 moverBuses();
 
-// --- SISTEMA DE ALERTAS DINÁMICAS ---
+// --- SISTEMA DE ALERTAS DINÁMICAS BILINGÜES ---
 const arrayAlertas = {
     es: [
         { tipo: 'error', texto: "⚠️ Alta congestión en Héroes. Retrasos de 5-10 min." },
@@ -248,13 +245,10 @@ const divAlerta = document.getElementById('alert-text');
 
 function actualizarAlerta() {
     divAlerta.style.opacity = '0';
-    
     setTimeout(() => {
-        // Tomar la alerta basada en el idioma actual
         const alertaVisible = arrayAlertas[idiomaActual][indiceAlerta];
         divAlerta.innerHTML = alertaVisible.texto;
         divAlerta.className = `alert-message alert-${alertaVisible.tipo}`;
-        
         divAlerta.style.opacity = '1';
         indiceAlerta = (indiceAlerta + 1) % arrayAlertas[idiomaActual].length;
     }, 500); 

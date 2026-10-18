@@ -2,19 +2,17 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prototipo TWS - UI Bilingüe</title>
+    <!-- Meta viewport ajustado para evitar zoom accidental en dispositivos móviles -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Prototipo TWS - UI Bilingüe y Responsive</title>
     
-    <!-- Hoja de estilos de Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <!-- Tu hoja de estilos personalizada -->
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
     <!-- PANTALLA DE BIENVENIDA -->
     <div id="welcome-screen">
-        <!-- Selector de Idioma -->
         <div class="lang-switcher">
             <button id="btn-es" class="lang-btn active">ES</button>
             <button id="btn-en" class="lang-btn">EN</button>
@@ -25,7 +23,6 @@
             <h1 id="wel-title">Bienvenido a TWS</h1>
             <p id="wel-desc">Sistema de Información Cívica en Tiempo Real</p>
             
-            <!-- Instrucciones -->
             <div class="instructions">
                 <div class="inst-step">
                     <span class="step-num">1</span>
@@ -41,7 +38,6 @@
                 </div>
             </div>
 
-            <!-- Botón de Inicio -->
             <button id="btn-start" class="btn-start">👉 Tocar para Empezar</button>
         </div>
     </div>
@@ -51,7 +47,7 @@
         <!-- HEADER -->
         <div class="top-bar">
             <div class="back-btn" id="btn-volver">←</div>
-            <div class="title" id="app-title">Rutas Troncal Norte - Caracas</div>
+            <div class="title" id="app-title">Troncal Norte - Caracas</div>
         </div>
 
         <!-- MAPA -->
@@ -62,7 +58,7 @@
         <!-- PANEL DERECHO (RUTAS) -->
         <div class="routes-panel">
             <div class="routes-header">
-                <span id="hdr-num">Número</span>
+                <span id="hdr-num">N°</span>
                 <span id="hdr-dest">Destino</span>
                 <span id="hdr-time" style="text-align: center;">Tiempo</span>
             </div>
@@ -88,9 +84,7 @@
         </div>
     </div>
 
-    <!-- Script de Leaflet -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <!-- Script de lógica -->
     <script src="script.js"></script>
 
 </body>

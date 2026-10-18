@@ -1,184 +1,154 @@
 body { 
     margin: 0; padding: 0; 
     font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
-    overflow: hidden; 
     background: #e2e8f0; 
+    overflow: hidden; /* Fijo en PC para el tótem */
 }
 
 /* --- PANTALLA DE BIENVENIDA --- */
 #welcome-screen {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
     background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-    color: white;
-    z-index: 3000; /* Encima de todo */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    color: white; z-index: 3000; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
     transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 }
-
 .lang-switcher {
-    position: absolute;
-    top: 40px; right: 50px;
-    display: flex;
-    gap: 15px;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 10px;
-    border-radius: 40px;
+    position: absolute; top: 30px; right: 30px; display: flex; gap: 10px;
+    background: rgba(255, 255, 255, 0.1); padding: 5px; border-radius: 40px;
 }
-
 .lang-btn {
-    background: transparent;
-    color: #94a3b8;
-    border: none;
-    font-size: 24px;
-    font-weight: bold;
-    padding: 15px 30px;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: all 0.3s;
+    background: transparent; color: #94a3b8; border: none; font-size: 20px;
+    font-weight: bold; padding: 10px 20px; border-radius: 30px; cursor: pointer; transition: all 0.3s;
 }
-
-.lang-btn.active {
-    background: #e11d48;
-    color: white;
-    box-shadow: 0 4px 15px rgba(225, 29, 72, 0.4);
-}
-
-.welcome-content {
-    text-align: center;
-    max-width: 800px;
-    width: 90%;
-}
-
-.welcome-icon {
-    font-size: 80px;
-    margin-bottom: 20px;
-}
-
-#wel-title {
-    font-size: 60px;
-    margin: 0 0 10px 0;
-    font-weight: 800;
-}
-
-#wel-desc {
-    font-size: 28px;
-    color: #94a3b8;
-    margin: 0 0 50px 0;
-}
-
+.lang-btn.active { background: #e11d48; color: white; box-shadow: 0 4px 15px rgba(225, 29, 72, 0.4); }
+.welcome-content { text-align: center; max-width: 800px; width: 90%; }
+.welcome-icon { font-size: 70px; margin-bottom: 10px; }
+#wel-title { font-size: 55px; margin: 0 0 10px 0; font-weight: 800; line-height: 1.1; }
+#wel-desc { font-size: 24px; color: #94a3b8; margin: 0 0 40px 0; }
 .instructions {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 40px;
-    border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    margin-bottom: 60px;
-    text-align: left;
+    background: rgba(255, 255, 255, 0.05); padding: 30px; border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1); margin-bottom: 40px; text-align: left;
 }
-
-.inst-step {
-    display: flex;
-    align-items: center;
-    margin-bottom: 25px;
-}
+.inst-step { display: flex; align-items: center; margin-bottom: 20px; }
 .inst-step:last-child { margin-bottom: 0; }
-
 .step-num {
-    background: #0ea5e9;
-    color: white;
-    width: 45px; height: 45px;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 24px; font-weight: bold;
-    margin-right: 20px;
-    flex-shrink: 0;
+    background: #0ea5e9; color: white; width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold;
+    margin-right: 15px; flex-shrink: 0;
 }
-
-.inst-step p {
-    margin: 0;
-    font-size: 24px;
-    color: #e2e8f0;
-}
-
+.inst-step p { margin: 0; font-size: 20px; color: #e2e8f0; }
 .btn-start {
-    background: #10b981;
-    color: white;
-    font-size: 32px;
-    font-weight: bold;
-    padding: 25px 60px;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
-    transition: transform 0.2s;
+    background: #10b981; color: white; font-size: 28px; font-weight: bold;
+    padding: 20px 50px; border: none; border-radius: 50px; cursor: pointer;
+    box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4); transition: transform 0.2s;
     animation: float 3s infinite ease-in-out;
 }
 .btn-start:active { transform: scale(0.95); }
+@keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
 
-@keyframes float {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-    100% { transform: translateY(0px); }
-}
+/* --- LAYOUT PRINCIPAL (Desktop) --- */
+.app-container { display: grid; grid-template-columns: 70% 30%; grid-template-rows: 80px 1fr 240px; height: 100vh; width: 100vw; }
+.top-bar { grid-column: 1 / 3; background: #e11d48; display: flex; align-items: center; padding: 0 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 2000; color: white; }
+.back-btn { font-size: 32px; cursor: pointer; margin-right: 15px; padding: 10px; transition: transform 0.2s; }
+.title { flex-grow: 1; text-align: center; font-size: 28px; font-weight: 700; letter-spacing: 1px; margin-right: 52px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-/* --- LAYOUT PRINCIPAL (CSS GRID) --- */
-.app-container { display: grid; grid-template-columns: 70% 30%; grid-template-rows: 85px 1fr 240px; height: 100vh; width: 100vw; }
-
-/* --- BARRA SUPERIOR --- */
-.top-bar { grid-column: 1 / 3; background: #e11d48; display: flex; align-items: center; padding: 0 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 2000; color: white; }
-.back-btn { font-size: 36px; cursor: pointer; margin-right: 20px; padding: 10px; transition: transform 0.2s; }
-.back-btn:hover { transform: translateX(-5px); }
-.title { flex-grow: 1; text-align: center; font-size: 30px; font-weight: 700; letter-spacing: 1px; margin-right: 66px; }
-
-/* --- MAPA --- */
+/* --- MAPA Y PANELES --- */
 #map-container { grid-column: 1 / 2; grid-row: 2 / 3; position: relative; box-shadow: inset -5px 0 15px rgba(0,0,0,0.05); }
 #map { height: 100%; width: 100%; z-index: 1; }
-
-/* --- PANEL DERECHO (RUTAS) --- */
-.routes-panel { grid-column: 2 / 3; grid-row: 2 / 3; background: #ffffff; padding: 25px; overflow-y: auto; border-left: 1px solid #cbd5e1; }
-.routes-header { display: grid; grid-template-columns: 1fr 2fr 1.2fr; padding-bottom: 15px; margin-bottom: 15px; font-size: 20px; font-weight: 700; color: #64748b; border-bottom: 2px solid #e2e8f0; }
-.route-row { display: grid; grid-template-columns: 1fr 2fr 1.2fr; align-items: center; padding: 15px; margin-bottom: 10px; background: #f8fafc; border-radius: 12px; cursor: pointer; transition: all 0.2s; border: 1px solid transparent; }
+.routes-panel { grid-column: 2 / 3; grid-row: 2 / 3; background: #ffffff; padding: 20px; overflow-y: auto; border-left: 1px solid #cbd5e1; }
+.routes-header { display: grid; grid-template-columns: 1fr 2fr 1.5fr; padding-bottom: 10px; margin-bottom: 10px; font-size: 18px; font-weight: 700; color: #64748b; border-bottom: 2px solid #e2e8f0; }
+.route-row { display: grid; grid-template-columns: 1fr 2fr 1.5fr; align-items: center; padding: 12px; margin-bottom: 8px; background: #f8fafc; border-radius: 12px; cursor: pointer; transition: all 0.2s; border: 1px solid transparent; }
 .route-row:hover { background: #ffffff; border: 1px solid #cbd5e1; box-shadow: 0 5px 15px rgba(0,0,0,0.08); transform: translateY(-2px); }
-.route-num { font-size: 30px; font-weight: 900; color: #e11d48; background: #ffe4e6; padding: 5px 10px; border-radius: 8px; text-align: center; width: fit-content; }
-.route-name { font-size: 22px; font-weight: 600; color: #1e293b; padding-left: 10px; }
-.route-time { font-size: 20px; font-weight: bold; color: #047857; background: #d1fae5; padding: 5px 15px; border-radius: 20px; text-align: center; min-width: 80px; transition: background-color 0.3s, color 0.3s; }
+.route-num { font-size: 24px; font-weight: 900; color: #e11d48; background: #ffe4e6; padding: 5px; border-radius: 8px; text-align: center; width: fit-content; }
+.route-name { font-size: 18px; font-weight: 600; color: #1e293b; padding-left: 10px; }
+.route-time { font-size: 16px; font-weight: bold; color: #047857; background: #d1fae5; padding: 5px 10px; border-radius: 20px; text-align: center; min-width: 65px; transition: background-color 0.3s, color 0.3s; }
 .route-time.arriving { background: #fef08a; color: #a16207; animation: blink 1s infinite alternate; }
 @keyframes blink { from { opacity: 1; } to { opacity: 0.5; } }
 
-/* --- PANEL INFERIOR IZQ (ESTACIONES) --- */
 .station-panel { grid-column: 1 / 2; grid-row: 3 / 4; background: #ffffff; display: flex; flex-direction: column; justify-content: center; align-items: center; border-right: 1px solid #cbd5e1; box-shadow: 0 -5px 15px rgba(0,0,0,0.05); z-index: 10; }
-.station-panel p { font-size: 24px; font-weight: 600; margin: 0 0 15px 0; color: #475569; }
-.station-select { width: 70%; padding: 20px 25px; font-size: 26px; font-weight: bold; color: #1e293b; border: 2px solid #cbd5e1; border-radius: 16px; cursor: pointer; appearance: none; background: url('https://cdn-icons-png.flaticon.com/512/271/271228.png') no-repeat right 20px center; background-size: 20px; background-color: #f8fafc; transition: border-color 0.2s; }
+.station-panel p { font-size: 20px; font-weight: 600; margin: 0 0 10px 0; color: #475569; }
+.station-select { width: 80%; padding: 15px 20px; font-size: 20px; font-weight: bold; color: #1e293b; border: 2px solid #cbd5e1; border-radius: 12px; cursor: pointer; appearance: none; background: url('https://cdn-icons-png.flaticon.com/512/271/271228.png') no-repeat right 15px center; background-size: 18px; background-color: #f8fafc; }
 .station-select:focus { outline: none; border-color: #e11d48; box-shadow: 0 0 0 4px rgba(225, 29, 72, 0.2); }
 
-/* --- PANEL INFERIOR DER (ALERTAS) --- */
-.alerts-panel { grid-column: 2 / 3; grid-row: 3 / 4; background: #ffffff; padding: 25px; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 -5px 15px rgba(0,0,0,0.05); z-index: 10; }
-.alerts-title { font-size: 22px; font-weight: 700; color: #1e293b; margin-bottom: 15px; display: flex; align-items: center; }
-.live-dot { width: 12px; height: 12px; background-color: #ef4444; border-radius: 50%; margin-right: 10px; animation: pulse 1.5s infinite; }
-.alert-message { padding: 20px; border-radius: 12px; font-size: 20px; font-weight: 600; transition: opacity 0.5s ease-in-out; min-height: 80px; display: flex; align-items: center; }
+.alerts-panel { grid-column: 2 / 3; grid-row: 3 / 4; background: #ffffff; padding: 20px; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 -5px 15px rgba(0,0,0,0.05); z-index: 10; }
+.alerts-title { font-size: 20px; font-weight: 700; color: #1e293b; margin-bottom: 10px; display: flex; align-items: center; }
+.live-dot { width: 10px; height: 10px; background-color: #ef4444; border-radius: 50%; margin-right: 10px; animation: pulse 1.5s infinite; }
+@keyframes pulse { 0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); } 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); } }
+.alert-message { padding: 15px; border-radius: 10px; font-size: 18px; font-weight: 600; transition: opacity 0.5s ease-in-out; min-height: 70px; display: flex; align-items: center; }
 .alert-error { background: #fef2f2; color: #b91c1c; border-left: 6px solid #ef4444; }
 .alert-warning { background: #fffbeb; color: #b45309; border-left: 6px solid #f59e0b; }
 .alert-success { background: #ecfdf5; color: #047857; border-left: 6px solid #10b981; }
 .alert-info { background: #eff6ff; color: #1d4ed8; border-left: 6px solid #3b82f6; }
 
-/* --- ICONOS DEL MAPA MEJORADOS --- */
-.station-pin { background-color: #e11d48; border: 3px solid #ffffff; border-radius: 50%; width: 32px; height: 32px; position: relative; box-shadow: 0 4px 10px rgba(0,0,0,0.4); cursor: pointer; transition: transform 0.2s; display: flex; justify-content: center; align-items: center; }
-.station-pin:hover { transform: scale(1.2); }
+/* --- ICONOS DEL MAPA --- */
+.station-pin { background-color: #e11d48; border: 3px solid #ffffff; border-radius: 50%; width: 32px; height: 32px; position: relative; box-shadow: 0 4px 10px rgba(0,0,0,0.4); cursor: pointer; display: flex; justify-content: center; align-items: center; }
 .station-pin img { width: 16px; height: 16px; filter: brightness(0) invert(1); }
 .station-pin::after { content: ''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%); border-width: 8px 6px 0; border-style: solid; border-color: #ffffff transparent transparent transparent; }
 .bus-pin { background-color: white; border: 3px solid #0ea5e9; border-radius: 50%; width: 44px; height: 44px; position: relative; display: flex; justify-content: center; align-items: center; box-shadow: 0 5px 12px rgba(0,0,0,0.4); font-weight: bold; font-size: 16px; color: #111; }
 .bus-pin::after { content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); border-width: 10px 8px 0; border-style: solid; border-color: #0ea5e9 transparent transparent transparent; }
 
-/* --- POPUP Y ETIQUETAS DE CONGESTIÓN --- */
+/* POPUP */
 .leaflet-popup-content-wrapper { border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
-.popup-custom { font-family: 'Segoe UI', sans-serif; font-size: 18px; padding: 5px; }
-.popup-custom h3 { margin: 0 0 10px 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 5px; color: #1e293b; }
-.popup-custom p { margin: 8px 0; color: #475569; }
-.badge-cong { display: inline-block; padding: 6px 12px; border-radius: 20px; font-weight: bold; font-size: 16px; margin-top: 5px; }
+.popup-custom { font-family: 'Segoe UI', sans-serif; font-size: 16px; padding: 5px; }
+.popup-custom h3 { margin: 0 0 8px 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 5px; color: #1e293b; }
+.popup-custom p { margin: 6px 0; color: #475569; }
+.badge-cong { display: inline-block; padding: 4px 10px; border-radius: 20px; font-weight: bold; font-size: 14px; margin-top: 5px; }
 .cong-baja { background: #d1fae5; color: #047857; }   
 .cong-normal { background: #fef08a; color: #a16207; } 
-.cong-alta { background: #fee2e2; color: #b91c1c; }
+.cong-alta { background: #fee2e2; color: #b91c1c; }   
+
+/* =======================================================
+   REGLAS RESPONSIVE (Celulares y Tablets pequeñas)
+   ======================================================= */
+@media (max-width: 900px) {
+    body {
+        overflow-y: auto; /* Permite scroll vertical en móviles */
+    }
+    
+    /* Pasa de Grid a formato Apilado (Columna) */
+    .app-container {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+    }
+
+    /* El mapa toma la mitad superior en el celular */
+    #map-container {
+        height: 50vh;
+        width: 100%;
+        border-right: none;
+        border-bottom: 3px solid #cbd5e1;
+    }
+
+    /* Barra superior fija al hacer scroll */
+    .top-bar {
+        position: sticky;
+        top: 0;
+        height: 60px;
+    }
+    .title { font-size: 20px; margin-right: 0;}
+    
+    /* Paneles adaptados a 100% de ancho */
+    .routes-panel, .station-panel, .alerts-panel {
+        width: 100%;
+        border-left: none;
+        border-right: none;
+        box-sizing: border-box;
+    }
+    
+    .routes-panel { height: auto; padding: 15px; }
+    .station-panel { padding: 25px 15px; border-top: 1px solid #cbd5e1; border-bottom: 1px solid #cbd5e1; }
+    .station-select { width: 100%; font-size: 18px; }
+    
+    .alerts-panel { padding: 20px 15px; margin-bottom: 20px; }
+
+    /* Ajustes Bienvenida Celular */
+    #wel-title { font-size: 38px; }
+    #wel-desc { font-size: 18px; }
+    .inst-step p { font-size: 16px; }
+    .btn-start { font-size: 20px; padding: 15px 30px; }
+    .lang-switcher { top: 15px; right: 15px; padding: 5px; gap: 5px; }
+    .lang-btn { font-size: 16px; padding: 8px 15px; }
+}
