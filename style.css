@@ -1,92 +1,102 @@
-body { 
-    margin: 0; padding: 0; 
-    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
-    background: #e2e8f0; 
-    overflow: hidden; /* Fijo en PC para el tótem */
-}
+body { margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: #e2e8f0; overflow: hidden; }
 
-/* --- PANTALLA DE BIENVENIDA --- */
-#welcome-screen {
-    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-    color: white; z-index: 3000; display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-}
-.lang-switcher {
-    position: absolute; top: 30px; right: 30px; display: flex; gap: 10px;
-    background: rgba(255, 255, 255, 0.1); padding: 5px; border-radius: 40px;
-}
-.lang-btn {
-    background: transparent; color: #94a3b8; border: none; font-size: 20px;
-    font-weight: bold; padding: 10px 20px; border-radius: 30px; cursor: pointer; transition: all 0.3s;
-}
-.lang-btn.active { background: #e11d48; color: white; box-shadow: 0 4px 15px rgba(225, 29, 72, 0.4); }
+/* =======================================================
+   PANTALLA DE BIENVENIDA
+   ======================================================= */
+#welcome-screen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: linear-gradient(135deg, #cc0000 0%, #8b0000 100%); color: white; z-index: 3000; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease-out, transform 0.5s ease-out; }
+.lang-switcher { position: absolute; top: 40px; right: 40px; display: flex; gap: 5px; background: rgba(255, 255, 255, 0.15); padding: 5px; border-radius: 40px; border: 1px solid rgba(255, 255, 255, 0.3); }
+.lang-btn { background: transparent; color: #ffffff; border: none; font-size: 20px; font-weight: bold; padding: 12px 25px; border-radius: 30px; cursor: pointer; transition: all 0.3s; }
+.lang-btn:hover { background: rgba(255, 255, 255, 0.1); }
+.lang-btn.active { background: #ffffff; color: #cc0000; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); }
 .welcome-content { text-align: center; max-width: 800px; width: 90%; }
-.welcome-icon { font-size: 70px; margin-bottom: 10px; }
-#wel-title { font-size: 55px; margin: 0 0 10px 0; font-weight: 800; line-height: 1.1; }
-#wel-desc { font-size: 24px; color: #94a3b8; margin: 0 0 40px 0; }
-.instructions {
-    background: rgba(255, 255, 255, 0.05); padding: 30px; border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.1); margin-bottom: 40px; text-align: left;
-}
-.inst-step { display: flex; align-items: center; margin-bottom: 20px; }
+.welcome-icon { font-size: 70px; margin-bottom: 10px; filter: drop-shadow(0px 4px 10px rgba(0,0,0,0.3)); }
+#wel-title { font-size: 60px; margin: 0 0 10px 0; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; }
+#wel-desc { font-size: 26px; color: #f8d7da; margin: 0 0 40px 0; font-weight: 400; }
+.instructions { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 35px 40px; border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.4); margin-bottom: 50px; text-align: left; box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
+.inst-step { display: flex; align-items: center; margin-bottom: 25px; }
 .inst-step:last-child { margin-bottom: 0; }
-.step-num {
-    background: #0ea5e9; color: white; width: 40px; height: 40px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold;
-    margin-right: 15px; flex-shrink: 0;
-}
-.inst-step p { margin: 0; font-size: 20px; color: #e2e8f0; }
-.btn-start {
-    background: #10b981; color: white; font-size: 28px; font-weight: bold;
-    padding: 20px 50px; border: none; border-radius: 50px; cursor: pointer;
-    box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4); transition: transform 0.2s;
-    animation: float 3s infinite ease-in-out;
-}
+.step-num { background: #ffffff; color: #cc0000; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 900; margin-right: 20px; flex-shrink: 0; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+.inst-step p { margin: 0; font-size: 22px; color: #ffffff; font-weight: 500; }
+.btn-start { background: #ffffff; color: #cc0000; font-size: 30px; font-weight: 900; padding: 22px 60px; border: 4px solid #ffffff; border-radius: 50px; cursor: pointer; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3); transition: all 0.3s; text-transform: uppercase; letter-spacing: 1px; animation: float 3s infinite ease-in-out; }
 .btn-start:active { transform: scale(0.95); }
+.btn-start:hover { background: transparent; color: #ffffff; }
 @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
 
-/* --- LAYOUT PRINCIPAL (Desktop) --- */
+/* =======================================================
+   LAYOUT PRINCIPAL
+   ======================================================= */
 .app-container { display: grid; grid-template-columns: 70% 30%; grid-template-rows: 80px 1fr 240px; height: 100vh; width: 100vw; }
-.top-bar { grid-column: 1 / 3; background: #e11d48; display: flex; align-items: center; padding: 0 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 2000; color: white; }
+.top-bar { grid-column: 1 / 3; background: #cc0000; display: flex; align-items: center; padding: 0 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 2000; color: white; }
 .back-btn { font-size: 32px; cursor: pointer; margin-right: 15px; padding: 10px; transition: transform 0.2s; }
 .title { flex-grow: 1; text-align: center; font-size: 28px; font-weight: 700; letter-spacing: 1px; margin-right: 52px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-/* --- MAPA Y PANELES --- */
 #map-container { grid-column: 1 / 2; grid-row: 2 / 3; position: relative; box-shadow: inset -5px 0 15px rgba(0,0,0,0.05); }
 #map { height: 100%; width: 100%; z-index: 1; }
+
 .routes-panel { grid-column: 2 / 3; grid-row: 2 / 3; background: #ffffff; padding: 20px; overflow-y: auto; border-left: 1px solid #cbd5e1; }
+.services-filter { margin-bottom: 25px; }
+.services-filter h3 { font-size: 18px; color: #64748b; margin: 0 0 10px 0; text-transform: uppercase; letter-spacing: 1px;}
+.filter-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+.route-btn { background: #f8fafc; border: 2px solid #cbd5e1; padding: 12px 10px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 18px; color: #475569; transition: all 0.2s; flex: 1 1 calc(30% - 10px); min-width: 65px; }
+.route-btn.active, .route-btn:hover { background: #cc0000; color: white; border-color: #cc0000; }
+
 .routes-header { display: grid; grid-template-columns: 1fr 2fr 1.5fr; padding-bottom: 10px; margin-bottom: 10px; font-size: 18px; font-weight: 700; color: #64748b; border-bottom: 2px solid #e2e8f0; }
 .route-row { display: grid; grid-template-columns: 1fr 2fr 1.5fr; align-items: center; padding: 12px; margin-bottom: 8px; background: #f8fafc; border-radius: 12px; cursor: pointer; transition: all 0.2s; border: 1px solid transparent; }
 .route-row:hover { background: #ffffff; border: 1px solid #cbd5e1; box-shadow: 0 5px 15px rgba(0,0,0,0.08); transform: translateY(-2px); }
-.route-num { font-size: 24px; font-weight: 900; color: #e11d48; background: #ffe4e6; padding: 5px; border-radius: 8px; text-align: center; width: fit-content; }
+
+/* --- COLORES DINÁMICOS DE RUTAS EN LA LISTA --- */
+.route-num { font-size: 24px; font-weight: 900; padding: 5px; border-radius: 8px; text-align: center; width: fit-content; }
+.route-num.bus-b { color: #16a34a; background: #dcfce7; } /* Verde Zona B */
+.route-num.bus-g { color: #0284c7; background: #e0f2fe; } /* Azul Zona G */
+.route-num.bus-h { color: #ea580c; background: #ffedd5; } /* Naranja Zona H */
+.route-num.bus-default { color: #cc0000; background: #f8d7da; } /* Rojo por defecto (Ruta 8) */
+
 .route-name { font-size: 18px; font-weight: 600; color: #1e293b; padding-left: 10px; }
 .route-time { font-size: 16px; font-weight: bold; color: #047857; background: #d1fae5; padding: 5px 10px; border-radius: 20px; text-align: center; min-width: 65px; transition: background-color 0.3s, color 0.3s; }
 .route-time.arriving { background: #fef08a; color: #a16207; animation: blink 1s infinite alternate; }
-@keyframes blink { from { opacity: 1; } to { opacity: 0.5; } }
 
 .station-panel { grid-column: 1 / 2; grid-row: 3 / 4; background: #ffffff; display: flex; flex-direction: column; justify-content: center; align-items: center; border-right: 1px solid #cbd5e1; box-shadow: 0 -5px 15px rgba(0,0,0,0.05); z-index: 10; }
 .station-panel p { font-size: 20px; font-weight: 600; margin: 0 0 10px 0; color: #475569; }
 .station-select { width: 80%; padding: 15px 20px; font-size: 20px; font-weight: bold; color: #1e293b; border: 2px solid #cbd5e1; border-radius: 12px; cursor: pointer; appearance: none; background: url('https://cdn-icons-png.flaticon.com/512/271/271228.png') no-repeat right 15px center; background-size: 18px; background-color: #f8fafc; }
-.station-select:focus { outline: none; border-color: #e11d48; box-shadow: 0 0 0 4px rgba(225, 29, 72, 0.2); }
+.station-select:focus { outline: none; border-color: #cc0000; box-shadow: 0 0 0 4px rgba(204, 0, 0, 0.2); }
 
 .alerts-panel { grid-column: 2 / 3; grid-row: 3 / 4; background: #ffffff; padding: 20px; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 -5px 15px rgba(0,0,0,0.05); z-index: 10; }
 .alerts-title { font-size: 20px; font-weight: 700; color: #1e293b; margin-bottom: 10px; display: flex; align-items: center; }
-.live-dot { width: 10px; height: 10px; background-color: #ef4444; border-radius: 50%; margin-right: 10px; animation: pulse 1.5s infinite; }
-@keyframes pulse { 0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); } 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); } }
+.live-dot { width: 10px; height: 10px; background-color: #cc0000; border-radius: 50%; margin-right: 10px; animation: pulse 1.5s infinite; }
 .alert-message { padding: 15px; border-radius: 10px; font-size: 18px; font-weight: 600; transition: opacity 0.5s ease-in-out; min-height: 70px; display: flex; align-items: center; }
-.alert-error { background: #fef2f2; color: #b91c1c; border-left: 6px solid #ef4444; }
+.alert-error { background: #f8d7da; color: #842029; border-left: 6px solid #cc0000; }
 .alert-warning { background: #fffbeb; color: #b45309; border-left: 6px solid #f59e0b; }
 .alert-success { background: #ecfdf5; color: #047857; border-left: 6px solid #10b981; }
 .alert-info { background: #eff6ff; color: #1d4ed8; border-left: 6px solid #3b82f6; }
 
-/* --- ICONOS DEL MAPA --- */
-.station-pin { background-color: #e11d48; border: 3px solid #ffffff; border-radius: 50%; width: 32px; height: 32px; position: relative; box-shadow: 0 4px 10px rgba(0,0,0,0.4); cursor: pointer; display: flex; justify-content: center; align-items: center; }
-.station-pin img { width: 16px; height: 16px; filter: brightness(0) invert(1); }
-.station-pin::after { content: ''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%); border-width: 8px 6px 0; border-style: solid; border-color: #ffffff transparent transparent transparent; }
-.bus-pin { background-color: white; border: 3px solid #0ea5e9; border-radius: 50%; width: 44px; height: 44px; position: relative; display: flex; justify-content: center; align-items: center; box-shadow: 0 5px 12px rgba(0,0,0,0.4); font-weight: bold; font-size: 16px; color: #111; }
-.bus-pin::after { content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); border-width: 10px 8px 0; border-style: solid; border-color: #0ea5e9 transparent transparent transparent; }
+/* --- ICONOS DEL MAPA Y COLORES DINÁMICOS DE BUSES --- */
+.station-pin { background-color: #cc0000; border: 3px solid #ffffff; border-radius: 50%; width: 32px; height: 32px; position: relative; box-shadow: 0 4px 10px rgba(0,0,0,0.4); cursor: pointer; display: flex; justify-content: center; align-items: center; transition: all 0.3s ease; }
+.station-pin img { width: 16px; height: 16px; filter: brightness(0) invert(1); transition: opacity 0.3s; }
+.station-pin::after { content: ''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%); border-width: 8px 6px 0; border-style: solid; border-color: #ffffff transparent transparent transparent; transition: border-color 0.3s; }
+.station-pin.inactive { background-color: #cbd5e1 !important; border-color: #f8fafc !important; transform: scale(0.75); box-shadow: none; z-index: 0; }
+.station-pin.inactive::after { border-color: #cbd5e1 transparent transparent transparent !important; }
+.station-pin.inactive img { opacity: 0.4; }
+
+/* Configuración base del bus */
+.bus-pin { 
+    background-color: white; border-radius: 50%; width: 44px; height: 44px; position: relative; 
+    display: flex; justify-content: center; align-items: center; box-shadow: 0 5px 12px rgba(0,0,0,0.4); 
+    font-weight: bold; font-size: 16px; color: #111; border: 3px solid #333; 
+}
+.bus-pin::after { 
+    content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); 
+    border-width: 10px 8px 0; border-style: solid; border-color: #333 transparent transparent transparent; 
+}
+
+/* Modificadores de color para los pines del bus */
+.bus-pin.bus-b { border-color: #16a34a; }
+.bus-pin.bus-b::after { border-color: #16a34a transparent transparent transparent; }
+.bus-pin.bus-g { border-color: #0284c7; }
+.bus-pin.bus-g::after { border-color: #0284c7 transparent transparent transparent; }
+.bus-pin.bus-h { border-color: #ea580c; }
+.bus-pin.bus-h::after { border-color: #ea580c transparent transparent transparent; }
+.bus-pin.bus-default { border-color: #cc0000; }
+.bus-pin.bus-default::after { border-color: #cc0000 transparent transparent transparent; }
 
 /* POPUP */
 .leaflet-popup-content-wrapper { border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
@@ -96,59 +106,24 @@ body {
 .badge-cong { display: inline-block; padding: 4px 10px; border-radius: 20px; font-weight: bold; font-size: 14px; margin-top: 5px; }
 .cong-baja { background: #d1fae5; color: #047857; }   
 .cong-normal { background: #fef08a; color: #a16207; } 
-.cong-alta { background: #fee2e2; color: #b91c1c; }   
+.cong-alta { background: #f8d7da; color: #842029; }   
 
-/* =======================================================
-   REGLAS RESPONSIVE (Celulares y Tablets pequeñas)
-   ======================================================= */
+/* RESPONSIVE */
 @media (max-width: 900px) {
-    body {
-        overflow-y: auto; /* Permite scroll vertical en móviles */
-    }
-    
-    /* Pasa de Grid a formato Apilado (Columna) */
-    .app-container {
-        display: flex;
-        flex-direction: column;
-        height: auto;
-        min-height: 100vh;
-    }
-
-    /* El mapa toma la mitad superior en el celular */
-    #map-container {
-        height: 50vh;
-        width: 100%;
-        border-right: none;
-        border-bottom: 3px solid #cbd5e1;
-    }
-
-    /* Barra superior fija al hacer scroll */
-    .top-bar {
-        position: sticky;
-        top: 0;
-        height: 60px;
-    }
+    body { overflow-y: auto; }
+    .app-container { display: flex; flex-direction: column; height: auto; min-height: 100vh; }
+    #map-container { height: 50vh; width: 100%; border-right: none; border-bottom: 3px solid #cbd5e1; }
+    .top-bar { position: sticky; top: 0; height: 60px; }
     .title { font-size: 20px; margin-right: 0;}
-    
-    /* Paneles adaptados a 100% de ancho */
-    .routes-panel, .station-panel, .alerts-panel {
-        width: 100%;
-        border-left: none;
-        border-right: none;
-        box-sizing: border-box;
-    }
-    
+    .routes-panel, .station-panel, .alerts-panel { width: 100%; border-left: none; border-right: none; box-sizing: border-box; }
     .routes-panel { height: auto; padding: 15px; }
     .station-panel { padding: 25px 15px; border-top: 1px solid #cbd5e1; border-bottom: 1px solid #cbd5e1; }
     .station-select { width: 100%; font-size: 18px; }
-    
     .alerts-panel { padding: 20px 15px; margin-bottom: 20px; }
-
-    /* Ajustes Bienvenida Celular */
-    #wel-title { font-size: 38px; }
-    #wel-desc { font-size: 18px; }
-    .inst-step p { font-size: 16px; }
-    .btn-start { font-size: 20px; padding: 15px 30px; }
+    #wel-title { font-size: 42px; }
+    #wel-desc { font-size: 20px; }
+    .inst-step p { font-size: 18px; }
+    .btn-start { font-size: 22px; padding: 18px 40px; }
     .lang-switcher { top: 15px; right: 15px; padding: 5px; gap: 5px; }
     .lang-btn { font-size: 16px; padding: 8px 15px; }
 }
