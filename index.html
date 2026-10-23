@@ -2,9 +2,8 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <!-- Meta viewport ajustado para evitar zoom accidental en dispositivos móviles -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Prototipo TWS - UI Bilingüe y Responsive</title>
+    <title>Prototipo TWS - Rutas y Paradas Dinámicas</title>
     
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="style.css" />
@@ -57,6 +56,19 @@
 
         <!-- PANEL DERECHO (RUTAS) -->
         <div class="routes-panel">
+            
+            <!-- NUEVO: Selector de Múltiples Rutas -->
+            <div class="services-filter">
+                <h3 id="filter-title">Ver paradas por ruta</h3>
+                <div class="filter-buttons">
+                    <button id="btn-filter-all" class="route-btn active">Todas</button>
+                    <button id="btn-filter-8" class="route-btn">8</button>
+                    <button id="btn-filter-b13" class="route-btn">B13</button>
+                    <button id="btn-filter-h75" class="route-btn">H75</button>
+                    <button id="btn-filter-g12" class="route-btn">G12</button>
+                </div>
+            </div>
+
             <div class="routes-header">
                 <span id="hdr-num">N°</span>
                 <span id="hdr-dest">Destino</span>
@@ -88,4 +100,3 @@
     <script src="script.js"></script>
 
 </body>
-</html>
